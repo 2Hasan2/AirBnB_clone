@@ -24,50 +24,20 @@ class Console(cmd.Cmd):
 	def default(self, arg):
 		"""default method for cmd module"""
 		argDict = {
-			"all": self.do_all,
-			"show": self.do_show,
-			"destroy": self.do_destroy,
-			"count": self.do_count,
-			"update": self.do_update
+			"quit" : self.do_quit,
+			"save" : self.do_save
 		};
-		print(argDict[arg] if arg in argDict.keys() else f"{arg}: command not found")
+		argDict[arg] if arg in argDict.keys() else print(f"{arg}: command not found")
 
 
 	def do_quit(self, arg):
-		"""Qiut command to exit the program."""
-
-	def do_EOF(self, arg):
-		"""EOF command to exit the program."""
-
-	def do_create(self, arg):
-		"""Usage: create <class>
-		Create a new instance of a given class.
-		"""
-
-	def do_show(self, arg):
-		"""Usage: show <class> <id> or <class>.show(<id>)
-		Display a string representation of a class instance of a given id.
-		"""
-
-	def do_destroy(self, arg):
-		"""Usage: destroy <class> <id> or <class>.destroy(<id>)
-		Delete a class instance of a given id."""
-
-	def do_all(self, arg):
-		"""Usage: all or all <class> or <class>.all()
-		Display a string representation of all instances of a given class."""
-		
-
-	def do_count(self, arg):
-		"""Usage: count <class> or <class>.count()
-		Count the number of instances of a given class."""
-
-	def do_update(self, arg):
-		"""Usage: update <class> <id> <attribute_name> <attribute_value> or
-	   <class>.update(<id>, <attribute_name>, <attribute_value>) or
-	   <class>.update(<id>, <dictionary>)
-	   Update an instance of a given class by adding or updating an attribute."""
-
+		print("from do_quit")
+		# this true will end the program
+		return True
+	
+	def do_save(self, arg):
+		print("from do_save")
+		return False
 
 if __name__ == "__main__":
 	Console().cmdloop()
