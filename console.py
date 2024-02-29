@@ -30,7 +30,7 @@ class Console(cmd.Cmd):
 			"count": self.do_count,
 			"update": self.do_update
 		};
-		print(arg)
+		print(arg if arg in argDict.keys() else f"{arg}: command not found")
 
 
 	def do_quit(self, arg):
