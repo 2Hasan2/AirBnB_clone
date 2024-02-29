@@ -5,7 +5,8 @@ class Console(cmd.Cmd):
 		(str):Sting - prompt for the command interpreter.
 	"""
 
-	prompt = "(hbnb) "
+	prompt = "(BNB) "
+
 	__classes = {
 		"""<class 'BaseModel'>""",
 		"""<class 'User'>""",
