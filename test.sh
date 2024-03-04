@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "python3 -m unittest discover tests" | bash
+find tests -type d -exec bash -c 'cd {} && python3 -m unittest discover' \;

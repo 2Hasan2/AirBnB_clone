@@ -15,4 +15,3 @@ Unittests:
 import os
 import sys
 import unittest
-from console import HBNBCommand
