@@ -1,7 +1,8 @@
+#!/usr/bin/python3
 import cmd
 
 
-class Console(cmd.Cmd):
+class HBNBCommand(cmd.Cmd):
     """Defines the BnB command interpreter.
     Attributes:
         (str):Sting - prompt for the command interpreter.
@@ -37,7 +38,6 @@ class Console(cmd.Cmd):
 
     def do_quit(self, arg):
         print("from do_quit")
-        # this true will end the program
         return True
 
     def do_save(self, arg):
@@ -46,4 +46,4 @@ class Console(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    Console().cmdloop()
+    HBNBCommand().cmdloop()
