@@ -33,3 +33,10 @@ Here are some examples of how to use the command interpreter:
 The following individuals have contributed to this project:
 - 2Hasan2 (h01554176846@gmail.com)
 - Ifonll ()
+
+## run and watch use nodemon for pycodestyle
+```sh
+nodemon --exec "clear && pycodestyle consonsole.py" -e py
+```
+
+<! -->
