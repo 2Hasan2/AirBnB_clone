@@ -2,6 +2,7 @@
 """Defines the BaseModel class. """
 from datetime import datetime
 from uuid import uuid4
+from models import storage
 
 
 class BaseModel():
@@ -20,12 +21,12 @@ class BaseModel():
                 if key != "__class__":
                     setattr(self, key, value)
         else:
-            """ store the object in the storage dictionary"""
+            storage.new(self)
 
     def save(self):
         """update to the current time"""
         self.updated_at = datetime.now()
-        """store the object in the storage dictionary"""
+        storage.save()
 
     def to_dict(self):
         """returns a dictionary of the BaseModel instance"""

@@ -146,10 +146,6 @@ class TestBaseModel_to_dict(unittest.TestCase):
             bm.to_dict(None)
 
 
-
-    
-
-
 """Test BaseModel save method."""
 
 
