@@ -21,12 +21,12 @@ class BaseModel():
                 if key != "__class__":
                     setattr(self, key, value)
         else:
-            models.storage.new(self)
+            """ store the object in the storage dictionary"""
 
     def save(self):
         """update to the current time"""
         self.updated_at = datetime.now()
-        models.storage.save()
+        """store the object in the storage dictionary"""
 
     def to_dict(self):
         """returns a dictionary of the BaseModel instance"""
