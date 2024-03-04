@@ -38,5 +38,3 @@ The following individuals have contributed to this project:
 ```sh
 nodemon --exec "clear && pycodestyle consonsole.py" -e py
 ```
-
-<! -->
