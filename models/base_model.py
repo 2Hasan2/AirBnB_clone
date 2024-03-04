@@ -14,9 +14,19 @@ class BaseModel():
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
 
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if key != "__class__":
+                    setattr(self, key, value)
+        else:
+            models.storage.new(self)
+
     def save(self):
         """update to the current time"""
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """returns a dictionary of the BaseModel instance"""
