@@ -2,7 +2,8 @@
 Simplified vacation rental platform mimicking AirBnB's functionality; users list, search, book properties, emphasizing full-stack web development skills.
 
 
-# test 
+
+## Authors
 ```bash
-$ echo "python3 -m unittest discover tests" | bash
+ git shortlog -se | perl -spe 's/^\s+\d+\s+//' | sed -e '/^CommitSyncScript.*$/d'
 ```
