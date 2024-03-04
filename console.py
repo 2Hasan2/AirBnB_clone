@@ -25,7 +25,8 @@ class Console(cmd.Cmd):
 		"""default method for cmd module"""
 		argDict = {
 			"quit" : self.do_quit,
-			"save" : self.do_save
+			"save" : self.do_save,
+			"new" : self.do_new,
 		};
 		argDict[arg] if arg in argDict.keys() else print(f"{arg}: command not found")
 
@@ -38,6 +39,7 @@ class Console(cmd.Cmd):
 	def do_save(self, arg):
 		print("from do_save")
 		return False
+
 
 if __name__ == "__main__":
 	Console().cmdloop()
