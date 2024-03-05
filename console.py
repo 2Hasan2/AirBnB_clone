@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import cmd
-
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """Defines the BnB command interpreter.
@@ -11,13 +11,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(BNB) "
 
     __classes = {
-        """<class 'BaseModel'>""",
-        """<class 'User'>""",
-        """<class 'State'>""",
-        """<class 'City'>""",
-        """<class 'Amenity'>""",
-        """<class 'Place'>""",
-        """<class 'Review'>"""
+        "BaseModel"
     }
 
     def emptyline(self):
@@ -27,6 +21,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """default method for cmd module"""
         argDict = {
+            "create": self.do_create,
         }
         if arg in argDict.keys():
             argDict[arg]
@@ -37,6 +32,18 @@ class HBNBCommand(cmd.Cmd):
         """Quit command to exit the program\n"""
 
         return True
+    
+    def do_create(self, arg):
+        """ this create new BaseModel"""
+        if not arg:
+            print("** class name missing **")
+            return False
+        if arg in HBNBCommand.__classes:
+            newMod = BaseModel()
+            newMod.save()
+            print(id(arg))
+        else :
+            print(" ** class doesn't exist **")
     
     def do_EOF(self, arg):
         """End of file"""
