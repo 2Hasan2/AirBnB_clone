@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
         return True
     
     def do_EOF(self, arg):
-        """EOF"""
+        """End of file"""
         print("")
         return True
 
