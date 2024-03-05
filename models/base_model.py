@@ -11,8 +11,8 @@ class BaseModel():
     def __init__(self, *args, **kwargs):
         """Initializes a new BaseModel instance."""
         self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.created_at = datetime.now().isoformat()
+        self.updated_at = datetime.now().isoformat()
 
         if kwargs:
             for key, value in kwargs.items():
@@ -25,14 +25,14 @@ class BaseModel():
 
     def save(self):
         """update to the current time"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.now().isoformat()
         models.storage.save()
 
     def to_dict(self):
         """returns a dictionary of the BaseModel instance"""
         ThisDict = self.__dict__.copy()
-        ThisDict["created_at"] = self.created_at.isoformat()
-        ThisDict["update_at"] = self.updated_at.isoformat()
+        ThisDict["created_at"] = self.created_at
+        ThisDict["updated_at"] = self.updated_at
         ThisDict["__class__"] = self.__class__.__name__
         return ThisDict
 
