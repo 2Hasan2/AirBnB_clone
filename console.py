@@ -47,21 +47,22 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """ this create new BaseModel"""
-        args, argn = arg.split(" ")[:2]
-        print(argn, args)
-
         if not arg:
             print("** class name missing **")
             return False
-            if not id(arg):
-                    print("** instance id missing **")
-        if arg in HBNBCommand.__classes:
-            newMod = BaseModel()
-            newMod.save()
-            if argn != id(args):
-                print("** instance id missing **")
-        else :
+        arg = arg.split()
+        if not arg[0] in HBNBCommand.__classes:
             print("** class doesn't exist **")
+            return False
+        elif len(arg) < 2:
+            print("** instance id missing **")
+            return False
+        
+            
+            
+
+
+    
     
     def do_EOF(self, arg):
         """End of file"""
