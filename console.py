@@ -32,9 +32,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, arg):
         """Quit command to exit the program\n"""
-
         return True
-    
+
     def do_create(self, arg):
         """ this create new BaseModel"""
         if not arg:
@@ -44,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
             newMod = BaseModel()
             newMod.save()
             print(id(arg))
-        else :
+        else:
             print("** class doesn't exist **")
 
     def do_show(self, arg):
@@ -59,17 +58,12 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg) < 2:
             print("** instance id missing **")
             return False
-        
-            
-            
 
-
-    
-    
     def do_EOF(self, arg):
         """End of file"""
         print("")
         return True
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
