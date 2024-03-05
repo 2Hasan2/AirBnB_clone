@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import cmd
 from models.base_model import BaseModel
+import models
+
 
 class HBNBCommand(cmd.Cmd):
     """Defines the BnB command interpreter.
@@ -46,22 +48,25 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, arg):
-        """ this create new BaseModel"""
-        args, argn = arg.split(" ")[:2]
-        print(argn, args)
+        # """Show the string representation of an instance"""
+        # if not arg:
+        #     print("** class name missing **")
+        #     return False
+        # argList = arg.split()
+        # if argList[0] not in HBNBCommand.__classes:
+        #     print("** class doesn't exist **")
+        #     return False
+        # if len(argList) < 2:
+        #     print("** instance id missing **")
+        #     return False
+        # key = argList[0] + "." + argList[1]
+        # if key in models.storage.all().keys():
+        #     print(models.storage.all()[key])
+        # else:
+        #     print("** no instance found **")
+        # return False
+    
 
-        if not arg:
-            print("** class name missing **")
-            return False
-            if not id(arg):
-                    print("** instance id missing **")
-        if arg in HBNBCommand.__classes:
-            newMod = BaseModel()
-            newMod.save()
-            if argn != id(args):
-                print("** instance id missing **")
-        else :
-            print("** class doesn't exist **")
     
     def do_EOF(self, arg):
         """End of file"""
