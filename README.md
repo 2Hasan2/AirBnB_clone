@@ -32,7 +32,7 @@ Here are some examples of how to use the command interpreter:
 ## Authors
 The following individuals have contributed to this project:
 - 2Hasan2 (h01554176846@gmail.com)
-- Ifonll ()
+- Ifonll (ghariebm762@gmail.com)
 
 ## run and watch use nodemon for pycodestyle
 ```sh

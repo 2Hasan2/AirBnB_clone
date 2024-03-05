@@ -27,9 +27,6 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """default method for cmd module"""
         argDict = {
-            "quit": self.do_quit,
-            "save": self.do_save,
-            "new": self.do_new,
         }
         if arg in argDict.keys():
             argDict[arg]
@@ -37,13 +34,14 @@ class HBNBCommand(cmd.Cmd):
             print(f"{arg}: command not found")
 
     def do_quit(self, arg):
-        print("from do_quit")
+        """Quit command to exit the program\n"""
+
         return True
-
-    def do_save(self, arg):
-        print("from do_save")
-        return False
-
+    
+    def do_EOF(self, arg):
+        """EOF"""
+        print("")
+        return True
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
