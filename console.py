@@ -24,9 +24,6 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """Default method for cmd module."""
         argDict = {
-            "quit": self.do_quit,
-            "save": self.do_save,
-            "new": self.do_new,
         }
         if arg in argDict.keys():
             argDict[arg]()
@@ -34,18 +31,11 @@ class HBNBCommand(cmd.Cmd):
             print(f"{arg}: command not found")
 
     def do_quit(self, arg):
-        """Quit command."""
-        print("Exiting HBNB command prompt.")
+        print("from do_quit")
         return True
 
     def do_save(self, arg):
-        """Save command."""
-        print("Saving data.")
-        return False
-
-    def do_new(self, arg):
-        """New command."""
-        print(f"Creating a new {arg}.")
+        print("from do_save")
         return False
 
 
