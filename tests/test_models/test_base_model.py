@@ -14,6 +14,7 @@ from datetime import datetime
 from time import sleep
 from models.base_model import BaseModel
 
+
 class TestBaseModel_instantiation(unittest.TestCase):
     """Test BaseModel instantiation."""
 
@@ -28,10 +29,10 @@ class TestBaseModel_instantiation(unittest.TestCase):
 
     def test_created_at_is_public_datetime(self):
         self.assertEqual(datetime, type(BaseModel().created_at))
-    
+
     def test_updated_at_is_public_datetime(self):
         self.assertEqual(datetime, type(BaseModel().updated_at))
-    
+
     def test_two_new_instances_have_different_ids(self):
         instance1 = BaseModel()
         instance2 = BaseModel()
@@ -57,16 +58,15 @@ class TestBaseModel_instantiation(unittest.TestCase):
 
     def test_passing_kwargs_instantiates(self):
         self.assertEqual(str, type(BaseModel(name="Betty", age=12)))
-    
+
     def test_passing_kwargs_stored_as_attributes(self):
         instance = BaseModel(name="Betty", age=12)
         self.assertEqual("Betty", instance.name)
         self.assertEqual(12, instance.age)
-    
+
     def test_str_magic_method(self):
         instance = BaseModel()
         self.assertEqual(str, type(instance.__str__()))
-    
 
     def test_args_unused(self):
         bm = BaseModel(None)
@@ -92,6 +92,7 @@ class TestBaseModel_instantiation(unittest.TestCase):
         self.assertEqual(bm.created_at, dt)
         self.assertEqual(bm.updated_at, dt)
 
+
 class TestBaseModel_to_dict(unittest.TestCase):
     """Test BaseModel to_dict method."""
 
@@ -105,7 +106,7 @@ class TestBaseModel_to_dict(unittest.TestCase):
         self.assertIn("created_at", bm_dict)
         self.assertIn("updated_at", bm_dict)
         self.assertIn("__class__", bm_dict)
-    
+
     def test_to_dict_contains_added_attribute(self):
         bm = BaseModel()
         bm.name = "Hasan"
@@ -122,7 +123,7 @@ class TestBaseModel_to_dict(unittest.TestCase):
         bm = BaseModel()
         bm_dict = bm.to_dict()
         self.assertEqual("BaseModel", bm_dict["__class__"])
-    
+
     def test_to_dict_output(self):
         bm = BaseModel()
         bm.id = "123"
