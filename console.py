@@ -63,6 +63,19 @@ class HBNBCommand(cmd.Cmd):
         print("")
         return True
 
+    def do_all(self, arg):
+        """Usage: all <class name>"""
+        arg = parse_argument(arg)
+        if not len(arg):
+            print([str(models.storage.all()[key])
+                   for key in models.storage.all()])
+        elif arg[0] not in HBNBCommand.__classes:
+            print(f"{Color.Warning}** class doesn't exist **{Color.End}")
+        else:
+            print([str(models.storage.all()[key])
+                   for key in models.storage.all()
+                   if key.split(".")[0] == arg[0]])
+
     def do_destroy(self, arg):
         """Usage: destroy <class name> <id> """
         arg = parse_argument(arg)
