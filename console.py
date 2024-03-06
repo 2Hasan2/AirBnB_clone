@@ -23,7 +23,8 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         """default method for cmd module"""
-        print(f"{arg}: command not found")
+        arg = parse_argument(arg)
+        print(f"{arg[0]}: command not found")
 
     def do_quit(self, arg):
         """Quit command to exit the program\n"""
@@ -64,6 +65,28 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Usage: update <class name> <id> <attribute name> <attribute value> """
         arg = parse_argument(arg)
+        if not len(arg):
+            print("** class name missing **")
+        elif arg[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        elif len(arg) < 2:
+            print("** instance id missing **")
+        elif "{}.{}".format(arg[0], arg[1]) not in models.storage.all():
+            print("** no instance found **")
+        elif len(arg) < 3:
+            print("** attribute name missing **")
+        elif len(arg) < 4:
+            print("** value missing **")
+        elif arg[2] in ["updated_at", "created_at", "id"]:
+            pass
+        else:
+            key = arg[0] + "." + arg[1]
+            if key in models.storage.all():
+                setattr(models.storage.all()[key], arg[2], arg[3])
+                models.storage.save()
+            else:
+                print("from the last else")
+                print("** no instance found **")
 
 
 if __name__ == "__main__":
