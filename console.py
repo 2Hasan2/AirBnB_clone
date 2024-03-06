@@ -3,6 +3,7 @@ import cmd
 from models.base_model import BaseModel
 import models
 from phase import parse_argument
+from colors import Color
 
 
 class HBNBCommand(cmd.Cmd):
@@ -11,7 +12,7 @@ class HBNBCommand(cmd.Cmd):
         (str):Sting - prompt for the command interpreter.
     """
 
-    prompt = "(BNB) "
+    prompt = f"{Color.Prompt}(BNB) {Color.End}"
 
     __classes = {
         "BaseModel"
@@ -24,7 +25,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """default method for cmd module"""
         arg = parse_argument(arg)
-        print(f"{arg[0]}: command not found")
+        print(f"{Color.Error}{arg[0]}: command not found{Color.End}")
 
     def do_quit(self, arg):
         """Quit command to exit the program\n"""
@@ -34,9 +35,9 @@ class HBNBCommand(cmd.Cmd):
         """ this create new BaseModel"""
         arg = parse_argument(arg)
         if not len(arg):
-            print("** class name missing **")
+            print(f"{Color.Warning}** class name missing **{Color.End}")
         elif arg[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
+            print(f"{Color.Warning}** class doesn't exist **{Color.End}")
         else:
             print(eval(arg[0])().id)
             models.storage.save()
@@ -45,17 +46,17 @@ class HBNBCommand(cmd.Cmd):
         """ this create new BaseModel"""
         arg = parse_argument(arg)
         if not len(arg):
-            print("** class name missing **")
+            print(f"{Color.Warning}** class name missing **{Color.End}")
         elif arg[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
+            print(f"{Color.Warning}** class doesn't exist **{Color.End}")
         elif len(arg) < 2:
-            print("** instance id missing **")
+            print(f"{Color.Warning}** instance id missing **{Color.End}")
         else:
             key = arg[0] + "." + arg[1]
             if key in models.storage.all():
                 print(models.storage.all()[key])
             else:
-                print("** no instance found **")
+                print(f"{Color.Warning}** no instance found **{Color.End}")
 
     def do_EOF(self, arg):
         """End of file"""
@@ -78,17 +79,17 @@ class HBNBCommand(cmd.Cmd):
         """Usage: update <class name> <id> <attribute name> <attribute value> """
         arg = parse_argument(arg)
         if not len(arg):
-            print("** class name missing **")
+            print(f"{Color.Warning}** class name missing **{Color.End}")
         elif arg[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
+            print(f"{Color.Warning}** class doesn't exist **{Color.End}")
         elif len(arg) < 2:
-            print("** instance id missing **")
+            print(f"{Color.Warning}** instance id missing **{Color.End}")
         elif "{}.{}".format(arg[0], arg[1]) not in models.storage.all():
-            print("** no instance found **")
+            print(f"{Color.Warning}** no instance found **{Color.End}")
         elif len(arg) < 3:
-            print("** attribute name missing **")
+            print(f"{Color.Warning}** attribute name missing **{Color.End}")
         elif len(arg) < 4:
-            print("** value missing **")
+            print(f"{Color.Warning}** value missing **{Color.End}")
         elif arg[2] in ["updated_at", "created_at", "id"]:
             pass
         else:
@@ -97,8 +98,7 @@ class HBNBCommand(cmd.Cmd):
                 setattr(models.storage.all()[key], arg[2], arg[3])
                 models.storage.save()
             else:
-                print("from the last else")
-                print("** no instance found **")
+                print(f"{Color.Warning}** no instance found **{Color.End}")
 
 
 if __name__ == "__main__":
