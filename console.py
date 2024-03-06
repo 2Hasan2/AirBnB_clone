@@ -73,6 +73,7 @@ class HBNBCommand(cmd.Cmd):
         """Usage: all <class name> """
         arg = parse_argument(arg)
         # start coding from here arg is array of strings
+
     def do_update(self, arg):
         """Usage: update <class name> <id> <attribute name> <attribute value> """
         arg = parse_argument(arg)
