@@ -4,6 +4,10 @@ import models
 from models.base_model import BaseModel
 from models.state import State
 from models.review import Review
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+# from models.user import User
 from parse import parse_argument
 from colors import Color
 
@@ -18,7 +22,12 @@ class HBNBCommand(cmd.Cmd):
 
     __classes = {
         "BaseModel",
+        # "User",
         "State",
+        "City",
+        "Amenity",
+        "Place",
+        "Review",
     }
 
     def emptyline(self):

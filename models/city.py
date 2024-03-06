@@ -2,7 +2,7 @@
 from models.base_model import BaseModel
 
 
-class State(BaseModel):
-    """Defines the State class."""
-
+class City(BaseModel):
+    """Defines the City class."""
+    state_id = ""
     name = ""
