@@ -2,6 +2,7 @@
 """file_storage module"""
 import json
 from models.base_model import BaseModel
+from models.state import State
 
 
 class FileStorage():
@@ -29,10 +30,12 @@ class FileStorage():
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
-            with open(FileStorage.__file_path, "r") as f:
-                FileStorage.__objects = {
-                    k: BaseModel(**v) for k, v in json.load(f).items()
-                }
+            with open(FileStorage.__file_path) as f:
+                objDict = json.load(f)
+                for obj in objDict.values():
+                    ClassName = obj["__class__"]
+                    del obj["__class__"]
+                    self.new(eval(ClassName)(**obj))
         except FileNotFoundError:
             pass
         except ValueError:

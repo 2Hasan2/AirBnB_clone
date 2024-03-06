@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 import cmd
-from models.base_model import BaseModel
 import models
+from models.base_model import BaseModel
+from models.state import State
+from models.review import Review
 from parse import parse_argument
 from colors import Color
 
@@ -15,7 +17,8 @@ class HBNBCommand(cmd.Cmd):
     prompt = f"{Color.Prompt}(BNB) {Color.End}"
 
     __classes = {
-        "BaseModel"
+        "BaseModel",
+        "State",
     }
 
     def emptyline(self):
