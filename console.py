@@ -2,6 +2,7 @@
 import cmd
 from models.base_model import BaseModel
 import models
+from phase import parse_argument
 
 
 class HBNBCommand(cmd.Cmd):
@@ -22,13 +23,7 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         """default method for cmd module"""
-        argDict = {
-            "create": self.do_create,
-        }
-        if arg in argDict.keys():
-            argDict[arg]
-        else:
-            print(f"{arg}: command not found")
+        print(f"{arg}: command not found")
 
     def do_quit(self, arg):
         """Quit command to exit the program\n"""
@@ -36,28 +31,30 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """ this create new BaseModel"""
-        if not arg:
+        arg = parse_argument(arg)
+        if not len(arg):
             print("** class name missing **")
-            return False
-        if arg in HBNBCommand.__classes:
-            newMod = BaseModel()
-            newMod.save()
-            print(id(arg))
-        else:
+        elif arg[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
+        else:
+            print(eval(arg[0])().id)
+            models.storage.save()
 
     def do_show(self, arg):
         """ this create new BaseModel"""
-        if not arg:
+        arg = parse_argument(arg)
+        if not len(arg):
             print("** class name missing **")
-            return False
-        arg = arg.split()
-        if not arg[0] in HBNBCommand.__classes:
+        elif arg[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-            return False
         elif len(arg) < 2:
             print("** instance id missing **")
-            return False
+        else:
+            key = arg[0] + "." + arg[1]
+            if key in models.storage.all():
+                print(models.storage.all()[key])
+            else:
+                print("** no instance found **")
 
     def do_EOF(self, arg):
         """End of file"""
@@ -66,27 +63,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Usage: update <class name> <id> <attribute name> <attribute value> """
-        arg = arg.split()
-        if not arg:
-            print("** class name missing **")
-            return False
-        if not arg[0] in HBNBCommand.__classes:
-            print("** class doesn't exist **")
-            return False
-        if len(arg) < 2:
-            print("** instance id missing **")
-            return False
-        if len(arg) < 4:
-            print("** value missing **")
-            return False
-
-        for key, value in models.storage.all().items():
-            if key == arg[1]:
-                setattr(value, arg[2], arg[3])
-                value.save()
-                return False
-            else:
-                print("** no instance found **")
+        arg = parse_argument(arg)
 
 
 if __name__ == "__main__":
