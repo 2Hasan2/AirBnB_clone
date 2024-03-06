@@ -61,7 +61,18 @@ class HBNBCommand(cmd.Cmd):
         """End of file"""
         print("")
         return True
+    
+    def do_destroy(self, arg):
+        """Usage: destroy <class name> <id> """
+        arg = parse_argument(arg)
+        # start coding from here arg is array of strings
+        # when finished this method commit and push to the repo
+        # U must do a lot of pushes : https://github.com/2Hasan2/AirBnB_clone/pulse
 
+    def do_all(self, arg):
+        """Usage: all <class name> """
+        arg = parse_argument(arg)
+        # start coding from here arg is array of strings
     def do_update(self, arg):
         """Usage: update <class name> <id> <attribute name> <attribute value> """
         arg = parse_argument(arg)
