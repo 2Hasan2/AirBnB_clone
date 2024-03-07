@@ -13,22 +13,19 @@ def parse_argument(arg):
     return arg.split()
 
 
-def MethodsOf(cls):
+def CommandsOf(cls):
     """Returns the list of methods of a class."""
-    return [method for method
-            in dir(cls)
+    return [method.replace("do_", "")
+            for method in dir(cls)
             if callable(getattr(cls, method))
-            # format: do_* to *
-            and method.startswith("do_") and
-            method.replace("do_", "")]
-
+            and method.startswith("do_")]
 
 
 if __name__ == "__main__":
     from console import HBNBCommand
     test = "BaseModel.all()"
     print(parse_argument(test))  # ['BaseModel', '.all()']
-    test = "BaseModel"
+    test = "City"
     print(parse_argument(test))  # ['BaseModel']
     test = "BaseModel.show()"
     print(parse_argument(test))  # ['BaseModel', '.show()']
@@ -39,4 +36,5 @@ if __name__ == "__main__":
     test = "create BaseModel"
     print(parse_argument(test))  # ['create', 'BaseModel']
 
-    print(MethodsOf(HBNBCommand))  # ['do_all', 'do_create', 'do_destroy', 'do_show', 'do_update']
+    # ['create', 'all', 'show', 'EOF', 'update', 'destroy', 'count']
+    print(CommandsOf(HBNBCommand))

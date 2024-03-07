@@ -9,7 +9,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.user import User
 from parse import parse_argument
-from parse import MethodsOf
+from parse import CommandsOf
 from colors import Color
 
 
@@ -44,11 +44,12 @@ class HBNBCommand(cmd.Cmd):
         arg = parse_argument(arg)
 
         """this will handle the <class name>.method()"""
-        if arg[0] in HBNBCommand.__classes:
-            # use MethodOf to run the method that is == to the arg[1]
-            print(MethodsOf(HBNBCommand).command(arg[1]))
-            
-
+        if len(arg) > 1 and arg[0] in HBNBCommand.__classes:
+            if arg[1] in CommandsOf(HBNBCommand):
+                NewArg = arg[0] + " " + " ".join(arg[2:])
+                eval(f"self.do_{arg[1]}('{NewArg}')")
+                return False
+        print(f"{Color.Yellow}** command not found **{Color.End}")
 
     def do_quit(self, arg):
         """Quit command to exit the program\n"""
@@ -146,6 +147,19 @@ class HBNBCommand(cmd.Cmd):
                 models.storage.save()
             else:
                 print(f"{Color.Yellow}** no instance found **{Color.End}")
+
+    def do_count(self, arg):
+        """
+        Usage: count <class name>
+        """
+        arg = parse_argument(arg)
+        if not len(arg):
+            print(f"{Color.Yellow}** class name missing **{Color.End}")
+        elif arg[0] not in HBNBCommand.__classes:
+            print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
+        else:
+            print(len([key for key in models.storage.all()
+                       if key.split(".")[0] == arg[0]]))
 
 
 if __name__ == "__main__":
