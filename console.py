@@ -95,7 +95,9 @@ class HBNBCommand(cmd.Cmd):
                    if key.split(".")[0] == arg[0]])
 
     def do_destroy(self, arg):
-        """Usage: destroy <class name> <id> """
+        """
+        Usage: destroy <class name> <id>
+        """
         arg = parse_argument(arg)
         if not len(arg):
             print(f"{Color.Warning}** class name missing **{Color.End}")
@@ -137,6 +139,7 @@ class HBNBCommand(cmd.Cmd):
                 models.storage.save()
             else:
                 print(f"{Color.Warning}** no instance found **{Color.End}")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
