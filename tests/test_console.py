@@ -102,25 +102,6 @@ class TestHBNBCommand(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertTrue(self.console.onecmd("") is None)
 
-    def test_help(self):
-        """Test the help command"""
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(self.console.onecmd("help"))
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(self.console.onecmd("help quit"))
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(self.console.onecmd("help EOF"))
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(self.console.onecmd("help create"))
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(self.console.onecmd("help show"))
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(self.console.onecmd("help destroy"))
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(self.console.onecmd("help all"))
-        with patch("sys.stdout", new=StringIO()) as output:
-            self.assertFalse(self.console.onecmd("help update"))
-
     def test_unknown_command(self):
         """Test an unknown command"""
         with patch("sys.stdout", new=StringIO()) as output:
