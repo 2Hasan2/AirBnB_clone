@@ -41,7 +41,11 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """default method for cmd module"""
         arg = parse_argument(arg)
-        print(f"** {Color.Error}{arg[0]}: command not found{Color.End} **")
+
+        """this will handle the <class name>.method()"""
+        print(arg)
+
+        # print(f"** {Color.Error}{arg[0]}: command not found{Color.End} **")
 
     def do_quit(self, arg):
         """Quit command to exit the program\n"""
