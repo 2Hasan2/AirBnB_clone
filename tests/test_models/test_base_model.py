@@ -92,7 +92,7 @@ class TestBaseModelSave(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         try:
-            os.rename("file.json", "tmp")
+            os.rename("file.json", "temp")
         except IOError:
             pass
 
@@ -103,7 +103,7 @@ class TestBaseModelSave(unittest.TestCase):
         except IOError:
             pass
         try:
-            os.rename("tmp", "file.json")
+            os.rename("temp", "file.json")
         except IOError:
             pass
 

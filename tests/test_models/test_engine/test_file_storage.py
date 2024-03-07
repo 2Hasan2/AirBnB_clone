@@ -44,7 +44,7 @@ class TestFileStorage_methods(unittest.TestCase):
     @classmethod
     def setUp(self):
         try:
-            os.rename("file.json", "tmp")
+            os.rename("file.json", "temp")
         except IOError:
             pass
 
@@ -55,7 +55,7 @@ class TestFileStorage_methods(unittest.TestCase):
         except IOError:
             pass
         try:
-            os.rename("tmp", "file.json")
+            os.rename("temp", "file.json")
         except IOError:
             pass
         FileStorage._FileStorage__objects = {}
