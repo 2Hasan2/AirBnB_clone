@@ -112,8 +112,8 @@ class HBNBCommand(cmd.Cmd):
                 print(f"{Color.Warning}** no instance found **{Color.End}")
 
     def do_update(self, arg):
-        """Usage:
-        update <class name> <id> <attribute name> <attribute value>
+        """
+        Usage: update <class name> <id> <attribute name> <attribute value>
         """
         arg = parse_argument(arg)
         if not len(arg):
@@ -137,34 +137,6 @@ class HBNBCommand(cmd.Cmd):
                 models.storage.save()
             else:
                 print(f"{Color.Warning}** no instance found **{Color.End}")
-
-    def do_update(self, arg):
-        """Usage:
-        update <class name> <id> <attribute name> <attribute value>
-        """
-        arg = parse_argument(arg)
-        if not len(arg):
-            print(f"{Color.Warning}** class name missing **{Color.End}")
-        elif arg[0] not in HBNBCommand.__classes:
-            print(f"{Color.Warning}** class doesn't exist **{Color.End}")
-        elif len(arg) < 2:
-            print(f"{Color.Warning}** instance id missing **{Color.End}")
-        elif "{}.{}".format(arg[0], arg[1]) not in models.storage.all():
-            print(f"{Color.Warning}** no instance found **{Color.End}")
-        elif len(arg) < 3:
-            print(f"{Color.Warning}** attribute name missing **{Color.End}")
-        elif len(arg) < 4:
-            print(f"{Color.Warning}** value missing **{Color.End}")
-        elif arg[2] in ["updated_at", "created_at", "id"]:
-            pass
-        else:
-            key = arg[0] + "." + arg[1]
-            if key in models.storage.all():
-                setattr(models.storage.all()[key], arg[2], arg[3])
-                models.storage.save()
-            else:
-                print(f"{Color.Warning}** no instance found **{Color.End}")
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
