@@ -7,7 +7,7 @@ from models.review import Review
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
-# from models.user import User
+from models.user import User
 from parse import parse_argument
 from colors import Color
 
@@ -19,15 +19,14 @@ class HBNBCommand(cmd.Cmd):
     """
 
     Color.disable(Color)
-    
-    # intro = f"{Color.Success}Welcome to the hbnb console!{Color.End}"
 
+    # intro = f"{Color.Success}Welcome to the hbnb console!{Color.End}"
 
     prompt = f"{Color.Prompt}(hbnb) {Color.End}"
 
     __classes = {
         "BaseModel",
-        # "User",
+        "User",
         "State",
         "City",
         "Amenity",
@@ -42,14 +41,14 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """default method for cmd module"""
         arg = parse_argument(arg)
-        print(f"{Color.Error}{arg[0]}: command not found{Color.End}")
+        print(f"** {Color.Error}{arg[0]}: command not found{Color.End} **")
 
     def do_quit(self, arg):
         """Quit command to exit the program\n"""
         return True
 
     def do_create(self, arg):
-        """ this create new BaseModel"""
+        """ this create new BaseModel """
         arg = parse_argument(arg)
         if not len(arg):
             print(f"{Color.Warning}** class name missing **{Color.End}")
@@ -60,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_show(self, arg):
-        """ this create new BaseModel"""
+        """ this show the object """
         arg = parse_argument(arg)
         if not len(arg):
             print(f"{Color.Warning}** class name missing **{Color.End}")
@@ -76,12 +75,14 @@ class HBNBCommand(cmd.Cmd):
                 print(f"{Color.Warning}** no instance found **{Color.End}")
 
     def do_EOF(self, arg):
-        """End of file"""
+        """EOF signal to exit the program"""
         print("")
         return True
 
     def do_all(self, arg):
-        """Usage: all <class name>"""
+        """
+        Usage: all <class name>
+        """
         arg = parse_argument(arg)
         if not len(arg):
             print([str(models.storage.all()[key])
