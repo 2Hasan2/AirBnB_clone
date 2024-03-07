@@ -18,7 +18,12 @@ class HBNBCommand(cmd.Cmd):
         (str):Sting - prompt for the command interpreter.
     """
 
-    prompt = f"{Color.Prompt}(BNB) {Color.End}"
+    Color.disable(Color)
+    
+    # intro = f"{Color.Success}Welcome to the hbnb console!{Color.End}"
+
+
+    prompt = f"{Color.Prompt}(hbnb) {Color.End}"
 
     __classes = {
         "BaseModel",

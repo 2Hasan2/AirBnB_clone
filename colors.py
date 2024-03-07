@@ -19,6 +19,7 @@ class Color:
         self.Underline = ''
         self.Purple = ''
         self.Warning = ''
+        self.Prompt = ''
 
     def enable(self):
         """Enable color"""
@@ -29,3 +30,4 @@ class Color:
         self.Underline = '\033[4m'
         self.Purple = '\033[95m'
         self.Warning = '\033[93m'
+        self.Prompt = '\033[94m'
