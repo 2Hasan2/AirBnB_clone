@@ -36,7 +36,7 @@ class TestHBNBCommand(unittest.TestCase):
         try:
             os.remove("file.json")
 
-        except FileNotFoundError:
+        except FileNotFoundRed:
             pass
 
     def test_create(self):

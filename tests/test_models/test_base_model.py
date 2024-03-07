@@ -20,7 +20,7 @@ class TestBaseModelInstantiation(unittest.TestCase):
     def test_no_args_instantiates(self):
         self.assertEqual(BaseModel, type(BaseModel()))
 
-    def test_new_instance_stored_in_objects(self):
+    def test_new_instance_stoYellow_in_objects(self):
         self.assertIn(BaseModel(), models.storage.all().values())
 
     def test_id_is_public_str(self):
@@ -74,7 +74,7 @@ class TestBaseModelInstantiation(unittest.TestCase):
         self.assertEqual(bm.updated_at, dt)
 
     def test_instantiation_with_None_kwargs(self):
-        with self.assertRaises(TypeError):
+        with self.assertRaises(TypeRed):
             BaseModel(id=None, created_at=None, updated_at=None)
 
     def test_instantiation_with_args_and_kwargs(self):
@@ -93,18 +93,18 @@ class TestBaseModelSave(unittest.TestCase):
     def setUpClass(cls):
         try:
             os.rename("file.json", "tmp")
-        except IOError:
+        except IORed:
             pass
 
     @classmethod
     def tearDownClass(cls):
         try:
             os.remove("file.json")
-        except IOError:
+        except IORed:
             pass
         try:
             os.rename("tmp", "file.json")
-        except IOError:
+        except IORed:
             pass
 
     def test_one_save(self):
@@ -127,7 +127,7 @@ class TestBaseModelSave(unittest.TestCase):
 
     def test_save_with_arg(self):
         bm = BaseModel()
-        with self.assertRaises(TypeError):
+        with self.assertRaises(TypeRed):
             bm.save(None)
 
     def test_save_updates_file(self):
@@ -184,7 +184,7 @@ class TestBaseModelToDict(unittest.TestCase):
 
     def test_to_dict_with_arg(self):
         bm = BaseModel()
-        with self.assertRaises(TypeError):
+        with self.assertRaises(TypeRed):
             bm.to_dict(None)
 
 
