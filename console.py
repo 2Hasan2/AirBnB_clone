@@ -8,7 +8,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.user import User
-from parse import parse_argument, CommandsOf
+from helper import parse_argument, CommandsOf
 from colors import Color
 
 
