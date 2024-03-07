@@ -8,8 +8,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.user import User
-from parse import parse_argument
-from parse import CommandsOf
+from parse import parse_argument, CommandsOf
 from colors import Color
 
 
@@ -19,9 +18,9 @@ class HBNBCommand(cmd.Cmd):
         (str):Sting - prompt for the command interpreter.
     """
 
-    Color.disable(Color)
+    # Color.disable(Color)
 
-    # intro = f"{Color.Success}Welcome to the hbnb console!{Color.End}"
+    intro = f"{Color.Success}Welcome to the hbnb console!{Color.End}"
 
     prompt = f"{Color.Prompt}(hbnb) {Color.End}"
 
@@ -42,12 +41,11 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """default method for cmd module"""
         arg = parse_argument(arg)
-
         """this will handle the <class name>.method()"""
-        if len(arg) > 1 and arg[0] in HBNBCommand.__classes:
-            if arg[1] in CommandsOf(HBNBCommand):
-                NewArg = arg[0] + " " + " ".join(arg[2:])
-                eval(f"self.do_{arg[1]}('{NewArg}')")
+        if len(arg) > 1 and arg[1] in HBNBCommand.__classes:
+            if arg[0] in CommandsOf(HBNBCommand):
+                NewArg = arg[1] + " " + " ".join(arg[2:])
+                eval(f"self.do_{arg[0]}('{NewArg}')")
                 return False
         print(f"{Color.Yellow}** command not found **{Color.End}")
 
@@ -143,7 +141,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             key = arg[0] + "." + arg[1]
             if key in models.storage.all():
-                setattr(models.storage.all()[key], arg[2], arg[3])
+                setattr(models.storage.all()[key],
+                        arg[2], arg[3].replace("'", "").replace('"', ""))
                 models.storage.save()
             else:
                 print(f"{Color.Yellow}** no instance found **{Color.End}")
