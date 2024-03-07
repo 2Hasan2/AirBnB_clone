@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines unittests for models/base_model.py.
+"""unittest for models/base_model.py.
 
 Unittest classes:
     TestBaseModelInstantiation
@@ -74,7 +74,7 @@ class TestBaseModelInstantiation(unittest.TestCase):
         self.assertEqual(bm.updated_at, dt)
 
     def test_instantiation_with_None_kwargs(self):
-        with self.assertRaises(TypeRed):
+        with self.assertRaises(TypeError):
             BaseModel(id=None, created_at=None, updated_at=None)
 
     def test_instantiation_with_args_and_kwargs(self):
@@ -93,18 +93,18 @@ class TestBaseModelSave(unittest.TestCase):
     def setUpClass(cls):
         try:
             os.rename("file.json", "tmp")
-        except IORed:
+        except IOError:
             pass
 
     @classmethod
     def tearDownClass(cls):
         try:
             os.remove("file.json")
-        except IORed:
+        except IOError:
             pass
         try:
             os.rename("tmp", "file.json")
-        except IORed:
+        except IOError:
             pass
 
     def test_one_save(self):
@@ -127,7 +127,7 @@ class TestBaseModelSave(unittest.TestCase):
 
     def test_save_with_arg(self):
         bm = BaseModel()
-        with self.assertRaises(TypeRed):
+        with self.assertRaises(TypeError):
             bm.save(None)
 
     def test_save_updates_file(self):
@@ -184,7 +184,7 @@ class TestBaseModelToDict(unittest.TestCase):
 
     def test_to_dict_with_arg(self):
         bm = BaseModel()
-        with self.assertRaises(TypeRed):
+        with self.assertRaises(TypeError):
             bm.to_dict(None)
 
 

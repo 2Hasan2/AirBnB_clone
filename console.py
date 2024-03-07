@@ -13,14 +13,11 @@ from colors import Color
 
 
 class HBNBCommand(cmd.Cmd):
-    """Defines the BnB command interpreter.
-    Attributes:
-        (str):Sting - prompt for the command interpreter.
-    """
+    """Defines the BnB command interpreter."""
 
     Color.disable(Color)
 
-    intro = f"{Color.Success}Welcome to the hbnb console!{Color.End}"
+    # intro = f"{Color.Success}Welcome to the hbnb console!{Color.End}"
 
     prompt = f"{Color.Prompt}(hbnb) {Color.End}"
 
