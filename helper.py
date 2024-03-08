@@ -41,10 +41,3 @@ def CommandsOf(cls):
             for method in dir(cls)
             if callable(getattr(cls, method))
             and method.startswith("do_")]
-
-if __name__ == "__main__":
-    print(parse_argument("create BaseModel"))
-    print(parse_argument("show BaseModel 1234-1234-1234"))
-    print(parse_argument('update BaseModel 1234-1234-1234 email "asjn@gaim.com"'))
-    print(parse_argument('User.update("1234-1234-1234", {"email": "sad@sa.com"})'))
-    print(parse_argument('User.update("38f22813-2753-4d42-b37c-57a17f1e4f88", {\'first_name\': "John", "age": 89})'))

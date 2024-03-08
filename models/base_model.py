@@ -38,3 +38,46 @@ class BaseModel():
 
     def __str__(self):
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+
+    @classmethod
+    def all(cls):
+        """returns a dictionary of all instances"""
+        return models.storage.getObjList(cls.__name__)
+
+    @classmethod
+    def create(cls, *args, **kwargs):
+        """creates a new instance of a class"""
+        newObj = cls(*args, **kwargs)
+        newObj.save()
+        return newObj
+
+    @classmethod
+    def count(cls):
+        """returns the number of instances of a class"""
+        return len(BaseModel.all(cls))
+
+    @classmethod
+    def show(cls, ObjId):
+        """returns the instance of a class"""
+        return models.storage.getObj(cls.__name__, ObjId)
+
+    @classmethod
+    def destroy(cls, ObjId):
+        """deletes the instance of a class"""
+        models.storage.deleteObj(cls.__name__, ObjId)
+
+    @classmethod
+    def update(cls, ObjId, *args):
+        """updates the instance of a class"""
+        if not len(args):
+            print("** attribute name missing **")
+            return
+        if len(args) == 1 and isinstance(args[0], dict):
+            args = args[0].items()
+        else:
+            args = [args[:2]]
+        for arg in args:
+            models.storage.updateObj
+            (cls.__name__,
+             ObjId,
+             *arg)

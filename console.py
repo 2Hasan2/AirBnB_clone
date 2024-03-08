@@ -31,10 +31,6 @@ class HBNBCommand(cmd.Cmd):
         "Review",
     }
 
-    def emptyline(self):
-        """emptyline method for cmd module"""
-        pass
-
     def default(self, arg):
         """default method for cmd module"""
         arg = parse_argument(arg)
@@ -46,8 +42,16 @@ class HBNBCommand(cmd.Cmd):
                 return False
         print(f"{Color.Yellow}** command not found **{Color.End}")
 
+    def emptyline(self):
+        """emptyline method for cmd module"""
+        pass
+
     def do_quit(self, arg):
-        """Quit command to exit the program\n"""
+        """Quit command to exit the program"""
+        return True
+
+    def do_EOF(self, arg):
+        """EOF signal to exit the program"""
         return True
 
     def do_create(self, arg):
@@ -77,11 +81,6 @@ class HBNBCommand(cmd.Cmd):
                 print(storage.all()[key])
             else:
                 print(f"{Color.Yellow}** no instance found **{Color.End}")
-
-    def do_EOF(self, arg):
-        """EOF signal to exit the program"""
-        print("")
-        return True
 
     def do_all(self, arg):
         """
