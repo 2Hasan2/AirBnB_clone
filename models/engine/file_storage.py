@@ -64,6 +64,9 @@ class FileStorage():
     def deleteObj(self, model="", ObjId=""):
         """delete object from __objects"""
         F = FileStorage
+        if model == "":
+            raise ModelIsMissingError()
+
         if model not in F.models:
             raise ModelNotFoundError()
         
@@ -77,9 +80,26 @@ class FileStorage():
         del F.__objects[key]
         self.save()
 
+    def createObj(self, model=""):
+        """create object and add to __objects"""
+        F = FileStorage
+        if model == "":
+            raise ModelIsMissingError()
+
+        if model not in F.models:
+            raise ModelNotFoundError()
+
+        instance = eval(model)()
+        self.new(instance)
+        self.save()
+        return instance.id
+
     def getObj(self, model="", ObjId=""):
         """get object from __objects"""
         F = FileStorage
+        if model == "":
+            raise ModelIsMissingError()
+
         if model not in F.models:
             raise ModelNotFoundError()
 
@@ -95,6 +115,9 @@ class FileStorage():
     def updateObj(self, model="", ObjId="", *AttAndVal):
         """update object from __objects"""
         F = FileStorage
+        if model == "":
+            raise ModelIsMissingError()
+
         if model not in F.models:
             raise ModelNotFoundError()
         
@@ -104,25 +127,29 @@ class FileStorage():
         key = model + "." + ObjId
         if key not in F.__objects:
             raise InstanceNotFoundError()
-        if len(AttAndVal) > 2:
-            raise InvalidSyntaxError()
 
-        if len(AttAndVal) == 0:
-            raise AttributeIsMissingError()
+        if isinstance(AttAndVal[0], dict):
+            instance = F.__objects[key]
+            AttAndVal = AttAndVal[0]
+        else:
+            if len(AttAndVal) > 2:
+                raise InvalidSyntaxError()
 
-        if len(AttAndVal) == 1:
-            raise ValueIsMissingError()        
+            if len(AttAndVal) == 0:
+                raise AttributeIsMissingError()
 
-        attr, value = AttAndVal
+            if len(AttAndVal) == 1:
+                raise ValueIsMissingError()        
+            
+            AttAndVal = {AttAndVal[0]: AttAndVal[1]}
 
-        if  not isinstance(attr, str):
-            raise InvalidSyntaxError()
+            if  not isinstance(AttAndVal[0], str):
+                raise InvalidSyntaxError()
 
-        if attr in ("id", "created_at", "updated_at"):
-            return
-
-        instance = F.__objects[key]
-        setattr(instance, attr, value)
+        for att, val in AttAndVal.items():
+            if att in ["id", "created_at", "updated_at"]:
+                continue
+            setattr(instance, att, val)
         self.save()
 
     def getObjList(self, model=""):

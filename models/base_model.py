@@ -39,7 +39,7 @@ class BaseModel():
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     @classmethod
-    def all(cls):
+    def all(cls, *args):
         """returns a dictionary of all instances"""
         return models.storage.getObjList(cls.__name__)
 
