@@ -51,7 +51,7 @@ class BaseModel():
         return newObj.id
 
     @classmethod
-    def count(cls):
+    def count(cls, *args):
         """returns the number of instances of a class"""
         return len(models.storage.getObjList(cls.__name__))
 

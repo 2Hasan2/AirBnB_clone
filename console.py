@@ -33,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """
-        Usage: all <class name>
+        Prints all string representation of all instances based or not on the class name
         """
         args = parse(arg)[:1]
         try:
@@ -42,15 +42,23 @@ class HBNBCommand(cmd.Cmd):
             HandelError(e)
 
     def do_show(self, arg):
-        """ this show the object """
+        """ Print string repr of a class instance, given id """
         args = parse(arg)[:2]
         try:
             print(storage.getObj(*args))
         except Exception as e:
             HandelError(e)
 
+    def do_count(self, arg):
+        """ Display count of instances specified """
+        args = parse(arg)[:1]
+        try:
+            print(len(storage.getObjList(*args)))
+        except Exception as e:
+            HandelError(e)
+
     def do_create(self, arg):
-        """ this create new BaseModel """
+        """ Create instance specified by user """
         args = parse(arg)[:1]
         try:
             print(storage.createObj(*args))
@@ -59,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """
-        Usage: destroy <class name> <id>
+        Delete a class instance of a given id, save result to json file
         """
         args = parse(arg)[:2]
         try:
@@ -84,15 +92,16 @@ class HBNBCommand(cmd.Cmd):
             cls = arg.split(".")[0]
             method = arg.split(".")[1].split("(")[0]
             arg = arg.split("(")[1].split(")")[0]
-            out = eval(f"{cls}.{method}({arg})")
+            out = eval(f"{cls}.{method}")(arg)
             if out:
                 print(out)
         except Exception as e:
             HandelError(e)
 
+
     def do_update(self, arg):
         """
-        Usage: update <class name> <id> <attribute name> <attribute value>
+        Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file)
         """
         args = parse(arg)
         try:

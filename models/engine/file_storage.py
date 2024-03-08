@@ -97,6 +97,7 @@ class FileStorage():
     def getObj(self, model="", ObjId=""):
         """get object from __objects"""
         F = FileStorage
+
         if model == "":
             raise ModelIsMissingError()
 
@@ -105,7 +106,6 @@ class FileStorage():
 
         if not ObjId:
             raise IdIsMissingError()
-
         key = model + "." + ObjId
         if key not in F.__objects:
             raise InstanceNotFoundError()
@@ -120,36 +120,34 @@ class FileStorage():
 
         if model not in F.models:
             raise ModelNotFoundError()
-        
+
         if not ObjId:
             raise IdIsMissingError()
-        
+
         key = model + "." + ObjId
         if key not in F.__objects:
             raise InstanceNotFoundError()
 
-        if isinstance(AttAndVal[0], dict):
-            instance = F.__objects[key]
-            AttAndVal = AttAndVal[0]
-        else:
-            if len(AttAndVal) > 2:
-                raise InvalidSyntaxError()
+        if len(AttAndVal) == 0:
+            raise AttributeIsMissingError()
+        elif len(AttAndVal) == 1:
+            raise ValueIsMissingError()
 
-            if len(AttAndVal) == 0:
-                raise AttributeIsMissingError()
 
-            if len(AttAndVal) == 1:
-                raise ValueIsMissingError()        
-            
-            AttAndVal = {AttAndVal[0]: AttAndVal[1]}
+        instance = F.__objects[key]
+        for i in range(0, len(AttAndVal), 2):
+            # if AttAndVal[i+1] is can convert to int
+            # convert it to int
+            try:
+                AttAndVal[i+1] = int(AttAndVal[i+1])
+            except :
+                AttAndVal[i+1] = AttAndVal[i+1]
+                pass
 
-            if  not isinstance(AttAndVal[0], str):
-                raise InvalidSyntaxError()
-
-        for att, val in AttAndVal.items():
-            if att in ["id", "created_at", "updated_at"]:
-                continue
-            setattr(instance, att, val)
+            setattr(
+                instance,
+                AttAndVal[i],
+                AttAndVal[i + 1])
         self.save()
 
     def getObjList(self, model=""):
