@@ -42,35 +42,9 @@ def CommandsOf(cls):
             if callable(getattr(cls, method))
             and method.startswith("do_")]
 
-
 if __name__ == "__main__":
-    # test = "BaseModel.all()"
-    # print(parse_argument(test)) # ['BaseModel', '.all()']
-    # test = "City"
-    # print(parse_argument(test))  # ['BaseModel']
-    # test = "BaseModel.show()"
-    # print(parse_argument(test)) # ['BaseModel', '.show()']
-    # test = "BaseModel.show(123)"
-    # print(parse_argument(test))  # ['BaseModel', '.show(123)']
-    # test = "create BaseModel"
-    # print(parse_argument(test))  # ['create', 'BaseModel']
-
-    # test = 'User.update("38f22813-2753-4d42-b37c-57a17f1e4f88",
-    # "first_name", "John")'
-    # print(parse_argument(test))
-
-    # test = "update City a98a18ec-0adc-4e48-b166-ee2f52202f9d hasan king"
-    # print(parse_argument(test))
-
-    # test = 'update City 50fa6556-3a40-4f00-8453-183e9f1af2c1 hasan
-    # "king of the world"'
-
-    # print(parse_argument(test))
-
-    # test = 'City.update("a98a18ec-0adc-4e48-b166-ee2f52202f9d",
-    # "hasan","king of the world")'
-    # print(parse_argument(test))
-
-    # ['create', 'all', 'show', 'EOF', 'update', 'destroy', 'count']
-    # CommandsOf(HBNBCommand))
-    pass
+    print(parse_argument("create BaseModel"))
+    print(parse_argument("show BaseModel 1234-1234-1234"))
+    print(parse_argument('update BaseModel 1234-1234-1234 email "asjn@gaim.com"'))
+    print(parse_argument('User.update("1234-1234-1234", {"email": "sad@sa.com"})'))
+    print(parse_argument('User.update("38f22813-2753-4d42-b37c-57a17f1e4f88", {\'first_name\': "John", "age": 89})'))

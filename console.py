@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import cmd
-import models
+from models import storage
 from models.base_model import BaseModel
 from models.state import State
 from models.review import Review
@@ -58,8 +58,9 @@ class HBNBCommand(cmd.Cmd):
         elif arg[0] not in HBNBCommand.__classes:
             print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
         else:
-            print(eval(arg[0])().id)
-            models.storage.save()
+            obj = eval(arg[0])()
+            print(obj.id)
+            obj.save()
 
     def do_show(self, arg):
         """ this show the object """
@@ -72,8 +73,8 @@ class HBNBCommand(cmd.Cmd):
             print(f"{Color.Yellow}** instance id missing **{Color.End}")
         else:
             key = arg[0] + "." + arg[1]
-            if key in models.storage.all():
-                print(models.storage.all()[key])
+            if key in storage.all():
+                print(storage.all()[key])
             else:
                 print(f"{Color.Yellow}** no instance found **{Color.End}")
 
@@ -88,13 +89,13 @@ class HBNBCommand(cmd.Cmd):
         """
         arg = parse_argument(arg)
         if not len(arg):
-            print([str(models.storage.all()[key])
-                   for key in models.storage.all()])
+            print([str(storage.all()[key])
+                   for key in storage.all()])
         elif arg[0] not in HBNBCommand.__classes:
             print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
         else:
-            print([str(models.storage.all()[key])
-                   for key in models.storage.all()
+            print([str(storage.all()[key])
+                   for key in storage.all()
                    if key.split(".")[0] == arg[0]])
 
     def do_destroy(self, arg):
@@ -110,9 +111,9 @@ class HBNBCommand(cmd.Cmd):
             print(f"{Color.Yellow}** instance id missing **{Color.End}")
         else:
             key = arg[0] + "." + arg[1]
-            if key in models.storage.all():
-                del models.storage.all()[key]
-                models.storage.save()
+            if key in storage.all():
+                del storage.all()[key]
+                storage.save()
             else:
                 print(f"{Color.Yellow}** no instance found **{Color.End}")
 
@@ -127,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
             print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
         elif len(arg) < 2:
             print(f"{Color.Yellow}** instance id missing **{Color.End}")
-        elif "{}.{}".format(arg[0], arg[1]) not in models.storage.all():
+        elif "{}.{}".format(arg[0], arg[1]) not in storage.all():
             print(f"{Color.Yellow}** no instance found **{Color.End}")
         elif len(arg) < 3:
             print(f"{Color.Yellow}** attribute name missing **{Color.End}")
@@ -137,10 +138,10 @@ class HBNBCommand(cmd.Cmd):
             pass
         else:
             key = arg[0] + "." + arg[1]
-            if key in models.storage.all():
-                setattr(models.storage.all()[key],
+            if key in storage.all():
+                setattr(storage.all()[key],
                         arg[2], arg[3].replace("'", "").replace('"', ""))
-                models.storage.save()
+                storage.save()
             else:
                 print(f"{Color.Yellow}** no instance found **{Color.End}")
 
@@ -154,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
         elif arg[0] not in HBNBCommand.__classes:
             print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
         else:
-            print(len([key for key in models.storage.all()
+            print(len([key for key in storage.all()
                        if key.split(".")[0] == arg[0]]))
 
 
