@@ -61,11 +61,14 @@ class FileStorage():
             raise e
 
     # helper functions
-    def deleteObj(self, model, ObjId):
+    def deleteObj(self, model="", ObjId=""):
         """delete object from __objects"""
         F = FileStorage
         if model not in F.models:
             raise ModelNotFoundError()
+        
+        if not ObjId:
+            raise IdIsMissingError()
 
         key = model + "." + ObjId
         if key not in F.__objects:
@@ -74,11 +77,14 @@ class FileStorage():
         del F.__objects[key]
         self.save()
 
-    def getObj(self, model, ObjId):
+    def getObj(self, model="", ObjId=""):
         """get object from __objects"""
         F = FileStorage
         if model not in F.models:
             raise ModelNotFoundError()
+
+        if not ObjId:
+            raise IdIsMissingError()
 
         key = model + "." + ObjId
         if key not in F.__objects:
@@ -86,15 +92,31 @@ class FileStorage():
 
         return F.__objects[key]
 
-    def updateObj(self, model, ObjId, attr, value):
+    def updateObj(self, model="", ObjId="", *AttAndVal):
         """update object from __objects"""
         F = FileStorage
         if model not in F.models:
             raise ModelNotFoundError()
-
+        
+        if not ObjId:
+            raise IdIsMissingError()
+        
         key = model + "." + ObjId
         if key not in F.__objects:
             raise InstanceNotFoundError()
+        if len(AttAndVal) > 2:
+            raise InvalidSyntaxError()
+
+        if len(AttAndVal) == 0:
+            raise AttributeIsMissingError()
+
+        if len(AttAndVal) == 1:
+            raise ValueIsMissingError()        
+
+        attr, value = AttAndVal
+
+        if  not isinstance(attr, str):
+            raise InvalidSyntaxError()
 
         if attr in ("id", "created_at", "updated_at"):
             return
@@ -103,10 +125,15 @@ class FileStorage():
         setattr(instance, attr, value)
         self.save()
 
-    def getObjList(self, model):
+    def getObjList(self, model=""):
         """get object list from __objects"""
         F = FileStorage
-        if model and model in F.models:
+        if model == "":
+            return [
+                str(val)
+                for val in F.__objects.values()
+            ]
+        elif model and model in F.models:
             results = []
             for key, val in FileStorage.__objects.items():
                 if key.startswith(model):

@@ -8,43 +8,17 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.user import User
-from helper import parse_argument, CommandsOf
-from colors import Color
+from helper import parse_argument, CommandsOf, parse
+from models.engine.errors import *
+import shlex
 
+
+classes = storage.models
 
 class HBNBCommand(cmd.Cmd):
     """Defines the BnB command interpreter."""
 
-    Color.disable(Color)
-
-    # intro = f"{Color.Success}Welcome to the hbnb console!{Color.End}"
-
-    prompt = f"{Color.Prompt}(hbnb) {Color.End}"
-
-    __classes = {
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Amenity",
-        "Place",
-        "Review",
-    }
-
-    def default(self, arg):
-        """default method for cmd module"""
-        arg = parse_argument(arg)
-        """this will handle the <class name>.method()"""
-        if len(arg) > 1 and arg[1] in HBNBCommand.__classes:
-            if arg[0] in CommandsOf(HBNBCommand):
-                NewArg = arg[1] + " " + " ".join(arg[2:])
-                eval(f"self.do_{arg[0]}('{NewArg}')")
-                return False
-        print(f"{Color.Yellow}** command not found **{Color.End}")
-
-    def emptyline(self):
-        """emptyline method for cmd module"""
-        pass
+    prompt = f"(hbnb) "
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -53,109 +27,148 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """EOF signal to exit the program"""
         return True
+    
+    def emptyline(self):
+        """Override the emptyline method"""
+        pass    
 
-    def do_create(self, arg):
-        """ this create new BaseModel """
-        arg = parse_argument(arg)
-        if not len(arg):
-            print(f"{Color.Yellow}** class name missing **{Color.End}")
-        elif arg[0] not in HBNBCommand.__classes:
-            print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
-        else:
-            obj = eval(arg[0])()
-            print(obj.id)
-            obj.save()
-
-    def do_show(self, arg):
-        """ this show the object """
-        arg = parse_argument(arg)
-        if not len(arg):
-            print(f"{Color.Yellow}** class name missing **{Color.End}")
-        elif arg[0] not in HBNBCommand.__classes:
-            print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
-        elif len(arg) < 2:
-            print(f"{Color.Yellow}** instance id missing **{Color.End}")
-        else:
-            key = arg[0] + "." + arg[1]
-            if key in storage.all():
-                print(storage.all()[key])
-            else:
-                print(f"{Color.Yellow}** no instance found **{Color.End}")
 
     def do_all(self, arg):
         """
         Usage: all <class name>
         """
-        arg = parse_argument(arg)
-        if not len(arg):
-            print([str(storage.all()[key])
-                   for key in storage.all()])
-        elif arg[0] not in HBNBCommand.__classes:
-            print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
+        args, n = parse(arg)
+        if n < 2:
+            try:
+                print(storage.getObjList(*args))
+            except ModelNotFoundError as e:
+                print(e)
         else:
-            print([str(storage.all()[key])
-                   for key in storage.all()
-                   if key.split(".")[0] == arg[0]])
+            print(f"** too many args **")
+
+    def do_show(self, arg):
+        """ this show the object """
+        args , n = parse(arg)
+        if not n:
+            print(f"** class name missing **")
+        elif n == 1:
+            if args[0] not in classes:
+                print(f"** class doesn't exist **")
+            else:
+                print(f"** instance id missing **")
+        elif n == 2:
+            try:
+                print(storage.getObj(*args))
+            except ModelNotFoundError as e:
+                print(e)
+            except InstanceNotFoundError as e:
+                print(e)
+        else:
+            print(f"** command not found **")
+
+    def do_create(self, arg):
+        """ this create new BaseModel """
+        args , n = parse(arg)
+        if not n:
+            print(f"** class name missing **")
+        elif args[0] not in classes:
+            print(f"** class doesn't exist **")
+        elif n == 1:
+            instance = eval(args[0])()
+            instance.save()
+            print(instance.id)
+        else:
+            print(f"** command not found **")
 
     def do_destroy(self, arg):
         """
         Usage: destroy <class name> <id>
         """
-        arg = parse_argument(arg)
-        if not len(arg):
-            print(f"{Color.Yellow}** class name missing **{Color.End}")
-        elif arg[0] not in HBNBCommand.__classes:
-            print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
-        elif len(arg) < 2:
-            print(f"{Color.Yellow}** instance id missing **{Color.End}")
-        else:
-            key = arg[0] + "." + arg[1]
-            if key in storage.all():
-                del storage.all()[key]
-                storage.save()
+        args, n = parse(arg)
+        if not n:
+            print(f"** class name missing **")
+        elif n == 1:
+            if args[0] not in classes:
+                print(f"** class doesn't exist **")
             else:
-                print(f"{Color.Yellow}** no instance found **{Color.End}")
+                print(f"** instance id missing **")
+        elif n == 2:
+            try:
+                storage.deleteObj(*args)
+            except ModelNotFoundError as e:
+                print(e)
+            except InstanceNotFoundError as e:
+                print(e)
+        else:
+            print(f"** too many args **")
+           
+
+
+    def default(self, arg):
+        """default method for cmd module"""
+        if "." in arg and arg[-1] == ")":
+            if arg.split(".")[0] not in classes:
+                print(f"** class doesn't exist **")
+                return
+            return self.class_method(arg)
+        else:
+            print(f"** command not found **")
+            return
+
+
+    def class_method(self, arg):
+        """class method"""
+        try:
+            cls = arg.split(".")[0]
+            method = arg.split(".")[1].split("(")[0]
+            arg = arg.split("(")[1].split(")")[0]
+            out = eval(f"{cls}.{method}({arg})")
+            if out:
+                print(out)
+        except AttributeError as e:
+            print(f"** method doesn't exist **")
+        except ModelNotFoundError as e:
+            print(e)
+        except IdIsMissingError as e:
+            print(e)
+            pass
+        except InstanceNotFoundError as e:
+            print(e)
+        except AttributeIsMissingError as e:
+            print(e)
+        except ValueIsMissingError as e:
+            print(e)
+        except InvalidSyntaxError as e:
+            print(e)
+        except Exception as e:
+            print(f"** command not found **")
+
+    
+    def do_models(self, arg):
+        """Prints all the models"""
+        print(*classes)
+
+
 
     def do_update(self, arg):
         """
         Usage: update <class name> <id> <attribute name> <attribute value>
         """
-        arg = parse_argument(arg)
-        if not len(arg):
-            print(f"{Color.Yellow}** class name missing **{Color.End}")
-        elif arg[0] not in HBNBCommand.__classes:
-            print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
-        elif len(arg) < 2:
-            print(f"{Color.Yellow}** instance id missing **{Color.End}")
-        elif "{}.{}".format(arg[0], arg[1]) not in storage.all():
-            print(f"{Color.Yellow}** no instance found **{Color.End}")
-        elif len(arg) < 3:
-            print(f"{Color.Yellow}** attribute name missing **{Color.End}")
-        elif len(arg) < 4:
-            print(f"{Color.Yellow}** value missing **{Color.End}")
-        elif arg[2] in ["updated_at", "created_at", "id"]:
-            pass
-        else:
-            key = arg[0] + "." + arg[1]
-            if key in storage.all():
-                setattr(storage.all()[key],
-                        arg[2], arg[3].replace("'", "").replace('"', ""))
-                storage.save()
-            else:
-                print(f"{Color.Yellow}** no instance found **{Color.End}")
-
-    def do_count(self, arg):
-        """
-        Usage: count <class name>
-        """
-        arg = parse_argument(arg)
-        if not len(arg):
-            print(f"{Color.Yellow}** class name missing **{Color.End}")
-        elif arg[0] not in HBNBCommand.__classes:
-            print(f"{Color.Yellow}** class doesn't exist **{Color.End}")
-        else:
-            print(len([key for key in storage.all()
-                       if key.split(".")[0] == arg[0]]))
+        args, n = parse(arg)
+        try:
+            storage.updateObj(*args)
+        except ModelNotFoundError as e:
+            print(e)
+        except IdIsMissingError as e:
+            print(e)
+        except InstanceNotFoundError as e:
+            print(e)
+        except AttributeIsMissingError as e:
+            print(e)
+        except ValueIsMissingError as e:
+            print(e)
+        except InvalidSyntaxError as e:
+            print(e)
 
 
 if __name__ == "__main__":

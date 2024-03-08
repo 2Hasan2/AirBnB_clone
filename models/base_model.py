@@ -4,7 +4,6 @@ from datetime import datetime
 from uuid import uuid4
 import models
 
-
 class BaseModel():
     """Defines the BaseModel class."""
 
@@ -49,35 +48,23 @@ class BaseModel():
         """creates a new instance of a class"""
         newObj = cls(*args, **kwargs)
         newObj.save()
-        return newObj
+        return newObj.id
 
     @classmethod
     def count(cls):
         """returns the number of instances of a class"""
-        return len(BaseModel.all(cls))
+        return len(models.storage.getObjList(cls.__name__))
 
     @classmethod
-    def show(cls, ObjId):
+    def show(cls, ObjId=""):
         """returns the instance of a class"""
         return models.storage.getObj(cls.__name__, ObjId)
 
     @classmethod
-    def destroy(cls, ObjId):
+    def destroy(cls, ObjId=""):
         """deletes the instance of a class"""
         models.storage.deleteObj(cls.__name__, ObjId)
 
     @classmethod
-    def update(cls, ObjId, *args):
-        """updates the instance of a class"""
-        if not len(args):
-            print("** attribute name missing **")
-            return
-        if len(args) == 1 and isinstance(args[0], dict):
-            args = args[0].items()
-        else:
-            args = [args[:2]]
-        for arg in args:
-            models.storage.updateObj
-            (cls.__name__,
-             ObjId,
-             *arg)
+    def update(cls, ObjId="", *args):
+        models.storage.updateObj(cls.__name__, ObjId, *args)

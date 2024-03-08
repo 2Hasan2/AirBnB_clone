@@ -18,6 +18,11 @@ def parse_argument(arg):
         line = [HandleMultipleWord(word) for word in split(arg)]
         return line
 
+def parse(line: str):
+    """Parses the line into a list of strings."""
+    args = split(line)
+    return args, len(args)
+
 
 def HandelParentheses(arg):
     """HandelParentheses."""
