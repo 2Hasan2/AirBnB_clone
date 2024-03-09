@@ -11,6 +11,15 @@ from models.review import Review
 from models.amenity import Amenity
 from models.state import State
 
+def is_float(string):
+    try:
+        float(string)
+        if '.' in string:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
 
 class FileStorage():
     """FileStorage class"""
@@ -114,6 +123,7 @@ class FileStorage():
 
     def updateObj(self, model="", ObjId="", *AttAndVal):
         """update object from __objects"""
+        AttAndVal = list(AttAndVal)
         F = FileStorage
         if model == "":
             raise ModelIsMissingError()
@@ -136,14 +146,14 @@ class FileStorage():
 
         instance = F.__objects[key]
         for i in range(0, len(AttAndVal), 2):
-            # if AttAndVal[i+1] is can convert to int
-            # convert it to int
-            try:
-                AttAndVal[i+1] = int(AttAndVal[i+1])
-            except :
-                AttAndVal[i+1] = AttAndVal[i+1]
-                pass
+            temp = AttAndVal[i+1]
+            if (is_float(temp)):
+                temp =  float(temp)
+            elif temp.isdigit():
+                temp = int(temp)
 
+            AttAndVal[i+1] = temp
+            
             setattr(
                 instance,
                 AttAndVal[i],

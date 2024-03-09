@@ -10,7 +10,7 @@ from models.place import Place
 from models.user import User
 from helper import parse
 from models.engine.errors import *
-import shlex
+
 
 classes = storage.models
 
