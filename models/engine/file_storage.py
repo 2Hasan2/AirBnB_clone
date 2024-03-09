@@ -11,6 +11,7 @@ from models.review import Review
 from models.amenity import Amenity
 from models.state import State
 
+
 def is_float(string):
     try:
         float(string)
@@ -20,6 +21,7 @@ def is_float(string):
             return False
     except ValueError:
         return False
+
 
 class FileStorage():
     """FileStorage class"""
@@ -78,7 +80,7 @@ class FileStorage():
 
         if model not in F.models:
             raise ModelNotFoundError()
-        
+
         if not ObjId:
             raise IdIsMissingError()
 
@@ -143,17 +145,16 @@ class FileStorage():
         elif len(AttAndVal) == 1:
             raise ValueIsMissingError()
 
-
         instance = F.__objects[key]
         for i in range(0, len(AttAndVal), 2):
-            temp = AttAndVal[i+1]
-            if (is_float(temp)):
-                temp =  float(temp)
+            temp = AttAndVal[i + 1]
+            if is_float(temp):
+                temp = float(temp)
             elif temp.isdigit():
                 temp = int(temp)
 
-            AttAndVal[i+1] = temp
-            
+            AttAndVal[i + 1] = temp
+
             setattr(
                 instance,
                 AttAndVal[i],

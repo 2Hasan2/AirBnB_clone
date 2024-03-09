@@ -14,6 +14,7 @@ from models.engine.errors import *
 
 classes = storage.models
 
+
 class HBNBCommand(cmd.Cmd):
     """Defines the BnB command interpreter."""
 
@@ -28,14 +29,15 @@ class HBNBCommand(cmd.Cmd):
         """
         print()
         return True
-    
+
     def emptyline(self):
         """Override the emptyline method
         """
-        pass    
+        pass
 
     def do_all(self, arg):
-        """Prints all string representation of all instances based or not on the class name
+        """Prints all string representation of
+        all instances based or not on the class name
         """
         args = parse(arg)[:1]
         try:
@@ -105,9 +107,9 @@ class HBNBCommand(cmd.Cmd):
             HandelError(e)
             print(e)
 
-
     def do_update(self, arg):
-        """Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file)
+        """Updates an instance based on the class name and id by
+        adding or updating attribute (save the change into the JSON file)
         """
         args = parse(arg)
         try:

@@ -3,6 +3,7 @@ from shlex import split
 import re
 import json
 
+
 def parse(line: str):
     """Parses the line into a list of strings."""
     match = re.search(r'{.*}', line)
