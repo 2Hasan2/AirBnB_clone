@@ -97,6 +97,7 @@ class HBNBCommand(cmd.Cmd):
                 print(out)
         except Exception as e:
             HandelError(e)
+            print(e)
 
 
     def do_update(self, arg):
