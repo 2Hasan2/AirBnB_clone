@@ -18,7 +18,7 @@ classes = storage.models
 class HBNBCommand(cmd.Cmd):
     """Defines the BnB command interpreter."""
 
-    prompt = f"(hbnb) "
+    prompt = "(hbnb) "
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """EOF signal to exit the program
         """
-        print()
+        print("")
         return True
 
     def emptyline(self):
