@@ -35,6 +35,11 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
+    def do_help(self, arg):
+        """Help command to display help
+        """
+        cmd.Cmd.do_help(self, arg)
+
     def do_all(self, arg):
         """Prints all string representation of \
 all instances based or not on the class name
