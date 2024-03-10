@@ -1,10 +1,5 @@
 #!/usr/bin/python3
 """unittest for models/user.py.
-
-Unittest classes:
-    TestUserInstantiation
-    TestUserSave
-    TestUserToDict
 """
 import os
 import models
