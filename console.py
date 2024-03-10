@@ -12,9 +12,6 @@ from helper import parse
 from models.engine.errors import *
 
 
-classes = storage.models
-
-
 class HBNBCommand(cmd.Cmd):
     """Defines the BnB command interpreter."""
 
@@ -90,7 +87,7 @@ all instances based or not on the class name
         """default method for cmd module
         """
         if "." in arg and arg[-1] == ")":
-            if arg.split(".")[0] not in classes:
+            if arg.split(".")[0] not in storage.models:
                 print("** class doesn't exist **")
                 return
             return self.class_method(arg)
