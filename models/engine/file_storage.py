@@ -136,7 +136,9 @@ class FileStorage():
         if not ObjId:
             raise IdIsMissingError()
 
+        ObjId = ObjId.replace('"', '')
         key = model + "." + ObjId
+        print(key)
         if key not in F.__objects:
             raise InstanceNotFoundError()
 
