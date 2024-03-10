@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""unittest for models/user.py.
-"""
+"""unittest for models/user.py."""
 import os
 import models
 import unittest

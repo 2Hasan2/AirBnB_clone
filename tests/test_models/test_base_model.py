@@ -1,11 +1,5 @@
 #!/usr/bin/python3
-"""Unittest for models/base_model.py.
-
-Unittest classes:
-    TestBaseModelInstantiation: Tests for instantiation of the BaseModel class.
-    TestBaseModelSave: Tests for the save method of the BaseModel class.
-    TestBaseModelToDict: Tests for the to_dict method of the BaseModel class.
-"""
+"""Unittest for models/base_model.py."""
 import os
 import models
 import unittest

@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""Defines unittests for models/place.py.
-"""
+"""Defines unittests for models/place.py."""
 import os
 import models
 import unittest

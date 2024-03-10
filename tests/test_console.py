@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""Defines unittest for console.py.
-"""
+"""Defines unittest for console.py."""
 import os
 import console
 import unittest
