@@ -138,29 +138,27 @@ class FileStorage():
 
         ObjId = ObjId.replace('"', '')
         key = model + "." + ObjId
-        print(key)
         if key not in F.__objects:
             raise InstanceNotFoundError()
-
-        if len(AttAndVal) == 0:
-            raise AttributeIsMissingError()
-        elif len(AttAndVal) == 1:
-            raise ValueIsMissingError()
-
-        instance = F.__objects[key]
-        for i in range(0, len(AttAndVal), 2):
-            temp = AttAndVal[i + 1]
-            if is_float(temp):
-                temp = float(temp)
-            elif temp.isdigit():
-                temp = int(temp)
-
-            AttAndVal[i + 1] = temp
-
-            setattr(
-                instance,
-                AttAndVal[i],
-                AttAndVal[i + 1])
+        if not isinstance(AttAndVal[0], object):
+            if len(AttAndVal) == 0:
+                raise AttributeIsMissingError()
+            elif len(AttAndVal) == 1:
+                raise ValueIsMissingError()
+            
+            AttAndVal = {AttAndVal[0]: AttAndVal[1]}
+        else:
+            AttAndVal = AttAndVal[0]
+        for key, value in AttAndVal.items():
+            if key in ["id", "created_at", "updated_at"]:
+                continue
+            if key in F.__objects[key].__dict__:
+                if isinstance(value, str):
+                    if is_float(value):
+                        value = float(value)
+                    else:
+                        value = value.replace('"', '')
+                setattr(F.__objects[key], key, value)
         self.save()
 
     def getObjList(self, model=""):
