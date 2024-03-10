@@ -37,6 +37,7 @@ class BaseModel():
         return ThisDict
 
     def __str__(self):
+        """returns the string representation of the BaseModel instance"""
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     @classmethod
