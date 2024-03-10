@@ -100,10 +100,7 @@ all instances based or not on the class name
         """class method
         """
         try:
-            cls = arg.split(".")[0]
-            method = arg.split(".")[1].split("(")[0]
-            arg = arg.split("(")[1].split(")")[0]
-            out = eval(f"{cls}.{method}({arg})")
+            out = eval(arg)
             if out:
                 print(out)
         except Exception as e:
