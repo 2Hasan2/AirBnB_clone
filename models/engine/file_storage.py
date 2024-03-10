@@ -155,7 +155,6 @@ class FileStorage():
                 raise ValueIsMissingError()
             AttAndVal = {AttAndVal[0]: AttAndVal[1]}
             
-        print(AttAndVal.items())
         for key, value in AttAndVal.items():
             if key in ["id", "created_at", "updated_at"]:
                 continue
@@ -165,7 +164,6 @@ class FileStorage():
                 else:
                     value = value.replace('"', '')
             setattr(F.__objects[Obj], key, value)
-            print(F.__objects[Obj])
         self.save()
 
     def getObjList(self, model=""):
