@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Defines unittest for console.py.
 """
 import os
