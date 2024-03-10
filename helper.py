@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""helper module"""
 from shlex import split
 import re
 import json
