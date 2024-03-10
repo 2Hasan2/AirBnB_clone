@@ -154,7 +154,7 @@ class FileStorage():
             elif len(AttAndVal) == 1:
                 raise ValueIsMissingError()
             AttAndVal = {AttAndVal[0]: AttAndVal[1]}
-            
+
         for key, value in AttAndVal.items():
             if key in ["id", "created_at", "updated_at"]:
                 continue
