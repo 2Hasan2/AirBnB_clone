@@ -145,7 +145,6 @@ class FileStorage():
                 raise AttributeIsMissingError()
             elif len(AttAndVal) == 1:
                 raise ValueIsMissingError()
-            
             AttAndVal = {AttAndVal[0]: AttAndVal[1]}
         else:
             AttAndVal = AttAndVal[0]
