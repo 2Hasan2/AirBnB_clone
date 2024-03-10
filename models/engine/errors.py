@@ -6,6 +6,7 @@ class ModelNotFoundError(Exception):
     """Raised when an unknown model is passed"""
 
     def __init__(self):
+        """initializes the error"""
         super().__init__(f"** class doesn't exist **")
 
 
@@ -13,6 +14,7 @@ class ModelIsMissingError(Exception):
     """Raised when a model is missing"""
 
     def __init__(self):
+        """initializes the error"""
         super().__init__(f"** class name missing **")
 
 
@@ -20,6 +22,7 @@ class InstanceNotFoundError(Exception):
     """Raised when an unknown instance is passed"""
 
     def __init__(self):
+        """initializes the error"""
         super().__init__(f"** no instance found **")
 
 
