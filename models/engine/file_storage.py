@@ -138,16 +138,23 @@ class FileStorage():
 
         ObjId = ObjId.replace('"', '')
         Obj = model + "." + ObjId
+
         if Obj not in F.__objects:
             raise InstanceNotFoundError()
-        if not isinstance(AttAndVal[0], object):
+
+        if len(AttAndVal) == 0:
+            raise AttributeIsMissingError()
+
+        if isinstance(AttAndVal[0], dict):
+            AttAndVal = AttAndVal[0]
+        else:
             if len(AttAndVal) == 0:
                 raise AttributeIsMissingError()
+
             elif len(AttAndVal) == 1:
                 raise ValueIsMissingError()
             AttAndVal = {AttAndVal[0]: AttAndVal[1]}
-        else:
-            AttAndVal = AttAndVal[0]
+            
         print(AttAndVal.items())
         for key, value in AttAndVal.items():
             if key in ["id", "created_at", "updated_at"]:
