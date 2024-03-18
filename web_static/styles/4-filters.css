@@ -19,4 +19,9 @@ section.filters button {
 	border: none;
 	border-radius: 4px;
 	margin-right: 30px;
+	cursor: pointer;
+}
+
+section.filters button:hover {
+	opacity: 0.9;
 }
