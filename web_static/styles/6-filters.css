@@ -37,7 +37,9 @@ section.filters div {
     height: 100%;
 	min-height: fit-content;
     flex-wrap: nowrap;
-	gap: 13px;
+	box-sizing: border-box;
+	padding: 5px 0;
+	gap: 10px;
 	h2 {
 		margin: 0;
 		font-size: 16px;
@@ -45,11 +47,13 @@ section.filters div {
 	}
 	h3 {
 		margin: 0;
+		padding: 0 10px;
 		margin-top: 10px;
 		font-weight: 600;
 	}
 	h4 {
 		margin: 0;
+		padding: 0 10px;
 		font-size: 14px;
 		font-weight: 400;
 	}
